@@ -41,12 +41,22 @@ export async function apiFetch<T>(endpoint: string, options: RequestInit = {}): 
   }
 
   if (!res.ok) {
-    let errorMsg = 'API request failed';
+    let errorMsg = `HTTP Error ${res.status}`;
     try {
-      const data = await res.json();
-      errorMsg = data.message || data.error || errorMsg;
+      const text = await res.text();
+      try {
+        const data = JSON.parse(text);
+        errorMsg = data.message || data.error || data.details || errorMsg;
+      } catch {
+        if (text && text.trim()) {
+          const clean = text.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+          errorMsg = clean.slice(0, 300) || `${errorMsg}: ${res.statusText || 'Server Error'}`;
+        } else {
+          errorMsg = `${errorMsg}: ${res.statusText || 'Server Error'}`;
+        }
+      }
     } catch {
-      errorMsg = `HTTP Error ${res.status}: ${res.statusText}`;
+      errorMsg = `${errorMsg}: ${res.statusText || 'Server Error'}`;
     }
     throw new Error(errorMsg);
   }
