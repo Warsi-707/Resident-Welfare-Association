@@ -1,0 +1,6 @@
+{
+  "name": "Resident Welfare Association",
+  "description": "Collection & Reporting System for Resident Welfare Associations, featuring Member Management, Challan Generation, Payments, Receipts, and Financial Reports.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
