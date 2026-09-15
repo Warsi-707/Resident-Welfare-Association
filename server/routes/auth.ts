@@ -16,7 +16,7 @@ router.post('/login', async (req, res): Promise<any> => {
     }
 
     const cleanUser = username.trim();
-    const user = await prisma.user.findFirst({
+    let user = await prisma.user.findFirst({
       where: {
         OR: [
           { username: { equals: cleanUser, mode: 'insensitive' } },
@@ -24,6 +24,24 @@ router.post('/login', async (req, res): Promise<any> => {
         ],
       },
     });
+
+    // If database is freshly initialized and has no users, auto-create default admin
+    if (!user && cleanUser.toLowerCase() === 'admin') {
+      const userCount = await prisma.user.count().catch(() => 0);
+      if (userCount === 0) {
+        const defaultHash = await bcrypt.hash('admin123', 10);
+        user = await prisma.user.create({
+          data: {
+            username: 'admin',
+            passwordHash: defaultHash,
+            fullName: 'Administrator',
+            role: 'ADMIN',
+            status: 'ACTIVE',
+            email: 'admin@rwa.org',
+          },
+        }).catch(() => null);
+      }
+    }
 
     if (!user) {
       return res.status(401).json({ error: 'Invalid username or password' });

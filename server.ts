@@ -8,7 +8,6 @@ import express from 'express';
 import cors from 'cors';
 import path from 'path';
 import fs from 'fs';
-import { createServer as createViteServer } from 'vite';
 
 import authRouter from './server/routes/auth';
 import membersRouter from './server/routes/members';
@@ -90,12 +89,21 @@ app.use('/api/whatsapp', whatsappBaileysRouter);
 app.get('/whatsapp-scan', (_req, res) => res.send(getWhatsAppScanHtml()));
 app.get('/whatsapp-connect', (_req, res) => res.send(getWhatsAppScanHtml()));
 
-// 9. Local & Standalone Server Startup Function
+// 9. Global Express Error Handler
+app.use((err: any, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
+  console.error('[Express Server Error]:', err);
+  if (!res.headersSent) {
+    res.status(500).json({ error: 'Internal Server Error', message: err?.message || String(err) });
+  }
+});
+
+// 10. Local & Standalone Server Startup Function
 async function startServer() {
   const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 
   // Vite Middleware in Development / Static Files in Production
   if (process.env.NODE_ENV !== 'production') {
+    const { createServer: createViteServer } = await import('vite');
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: 'spa',
