@@ -209,9 +209,17 @@ router.post('/', authenticateToken, requireRole(['ADMIN', 'COLLECTION_STAFF']), 
 
     const currentPaymentsCount = await prisma.payment.count();
     const currentYear = new Date().getFullYear();
-    const receiptSerial = String(currentPaymentsCount + 1).padStart(3, '0');
-    const receiptNumber = `REC-${currentYear}-${receiptSerial}`;
-    const paymentNumber = `PAY-${currentYear}-${receiptSerial}`;
+    let nextSeq = currentPaymentsCount + 1;
+    let receiptSerial = String(nextSeq).padStart(3, '0');
+    let receiptNumber = `REC-${currentYear}-${receiptSerial}`;
+    let paymentNumber = `PAY-${currentYear}-${receiptSerial}`;
+
+    while (await prisma.payment.findFirst({ where: { OR: [{ receiptNumber }, { paymentNumber }] } })) {
+      nextSeq++;
+      receiptSerial = String(nextSeq).padStart(3, '0');
+      receiptNumber = `REC-${currentYear}-${receiptSerial}`;
+      paymentNumber = `PAY-${currentYear}-${receiptSerial}`;
+    }
 
     // Execute transactional allocation
     const paymentResult = await prisma.$transaction(async (tx) => {
@@ -224,6 +232,20 @@ router.post('/', authenticateToken, requireRole(['ADMIN', 'COLLECTION_STAFF']), 
         orderBy: [{ year: 'asc' }, { monthKey: 'asc' }, { createdAt: 'asc' }],
       });
 
+      const totalMemberOutstanding = pendingChallans.reduce((sum, c) => sum + c.balance, 0);
+
+      if (pendingChallans.length === 0 || totalMemberOutstanding <= 0) {
+        const err: any = new Error('This member has no outstanding balance to collect payment for.');
+        err.statusCode = 400;
+        throw err;
+      }
+
+      if (amount > totalMemberOutstanding) {
+        const err: any = new Error(`Payment amount (Rs. ${amount.toLocaleString()}) exceeds total outstanding balance of Rs. ${totalMemberOutstanding.toLocaleString()}.`);
+        err.statusCode = 400;
+        throw err;
+      }
+
       // If a specific challan was paid from the UI, prioritize that challan
       if (challanId) {
         const priorityIndex = pendingChallans.findIndex(
@@ -231,9 +253,16 @@ router.post('/', authenticateToken, requireRole(['ADMIN', 'COLLECTION_STAFF']), 
         );
         if (priorityIndex > -1) {
           const [targeted] = pendingChallans.splice(priorityIndex, 1);
+          if (targeted.balance <= 0) {
+            throw new Error(`Target challan ${targeted.challanNumber} has no remaining balance to collect.`);
+          }
           pendingChallans.unshift(targeted);
+        } else {
+          throw new Error('Selected target challan does not belong to this member or is already fully paid.');
         }
       }
+
+      const derivedType = amount >= totalMemberOutstanding ? 'Full Paid' : 'Partial Paid';
 
       // 2. Create the master Payment record
       const payment = await tx.payment.create({
@@ -243,7 +272,7 @@ router.post('/', authenticateToken, requireRole(['ADMIN', 'COLLECTION_STAFF']), 
           memberId: member.id,
           amount,
           paymentDate: paymentDate || getLocalDateString(),
-          paymentType: paymentType || 'Full Paid',
+          paymentType: derivedType,
           paymentMethod: paymentMethod || 'Cash',
           referenceNumber: referenceNumber || null,
           relevantMonth: pendingChallans[0]?.month || 'Current Dues',
@@ -271,7 +300,7 @@ router.post('/', authenticateToken, requireRole(['ADMIN', 'COLLECTION_STAFF']), 
           });
 
           const newPaid = challan.paidAmount + alloc;
-          const newBalance = Math.max(0, challan.totalAmount - newPaid);
+          const newBalance = Math.max(0, challan.baseAmount - newPaid);
           const newStatus = newBalance === 0 ? 'Paid' : newPaid > 0 ? 'Partial Paid' : 'Unpaid';
 
           await tx.challan.update({
@@ -461,8 +490,11 @@ router.post('/', authenticateToken, requireRole(['ADMIN', 'COLLECTION_STAFF']), 
       whatsappSent,
     });
   } catch (error: any) {
-    console.error('Payment collection error:', error);
-    return res.status(500).json({ error: error.message || 'Failed to record payment' });
+    console.error('Payment collection error:', error.message);
+    if (!res.headersSent) {
+      const status = error.statusCode || 500;
+      return res.status(status).json({ error: error.message || 'Failed to record payment' });
+    }
   }
 });
 
@@ -513,7 +545,7 @@ router.post('/:id/void', authenticateToken, requireRole(['ADMIN']), async (req: 
       for (const alloc of payment.allocations) {
         const challan = alloc.challan;
         const revertedPaid = Math.max(0, challan.paidAmount - alloc.allocatedAmount);
-        const revertedBalance = challan.totalAmount - revertedPaid;
+        const revertedBalance = Math.max(0, challan.baseAmount - revertedPaid);
         const revertedStatus = revertedPaid === 0 ? 'Unpaid' : 'Partial Paid';
 
         await tx.challan.update({

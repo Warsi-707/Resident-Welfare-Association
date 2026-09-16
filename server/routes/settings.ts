@@ -7,8 +7,33 @@ import fs from 'fs';
 
 const router = Router();
 
-// GET /api/settings
-router.get('/', async (_req, res): Promise<any> => {
+function sanitizeSettingsDTO(settings: any) {
+  if (!settings) return null;
+  const { whatsappAccessToken, ...safeSettings } = settings;
+  return {
+    ...safeSettings,
+    hasWhatsappToken: Boolean(whatsappAccessToken),
+  };
+}
+
+function getPublicSettingsDTO(settings: any) {
+  if (!settings) return null;
+  return {
+    id: settings.id,
+    organizationName: settings.organizationName,
+    address: settings.address,
+    contactNumber: settings.contactNumber,
+    currency: settings.currency,
+    defaultDueDay: settings.defaultDueDay,
+    challanFooter: settings.challanFooter,
+    receiptFooter: settings.receiptFooter,
+    logoUrl: settings.logoUrl,
+    challanCopies: settings.challanCopies,
+  };
+}
+
+// GET /api/settings (ADMIN or STAFF only)
+router.get('/', authenticateToken, requireRole(['ADMIN', 'COLLECTION_STAFF']), async (req: AuthenticatedRequest, res: Response): Promise<any> => {
   try {
     let settings = await prisma.associationSettings.findFirst();
     if (!settings) {
@@ -28,7 +53,7 @@ router.get('/', async (_req, res): Promise<any> => {
       });
     }
 
-    return res.json(settings);
+    return res.json(sanitizeSettingsDTO(settings));
   } catch (error) {
     console.error('Fetch settings error:', error);
     return res.status(500).json({ error: 'Failed to retrieve settings' });
@@ -72,7 +97,7 @@ router.put('/', authenticateToken, requireRole(['ADMIN']), async (req: Authentic
     if (whatsappSenderNumber !== undefined) {
       updateData.whatsappSenderNumber = whatsappSenderNumber;
     }
-    if (whatsappAccessToken !== undefined) {
+    if (whatsappAccessToken !== undefined && whatsappAccessToken !== '••••••••') {
       updateData.whatsappAccessToken = whatsappAccessToken;
     }
     if (whatsappPhoneNumberId !== undefined) {
@@ -94,7 +119,7 @@ router.put('/', authenticateToken, requireRole(['ADMIN']), async (req: Authentic
         challanCopies: Number(challanCopies) || 1,
         logoUrl: logoUrl || null,
         whatsappSenderNumber: whatsappSenderNumber || '+92 300 1234567',
-        whatsappAccessToken: whatsappAccessToken || null,
+        whatsappAccessToken: whatsappAccessToken && whatsappAccessToken !== '••••••••' ? whatsappAccessToken : null,
         whatsappPhoneNumberId: whatsappPhoneNumberId || null,
       } as any,
     });
@@ -108,7 +133,7 @@ router.put('/', authenticateToken, requireRole(['ADMIN']), async (req: Authentic
       ipAddress: req.ip,
     });
 
-    return res.json(settings);
+    return res.json(sanitizeSettingsDTO(settings));
   } catch (error) {
     console.error('Update settings error:', error);
     return res.status(500).json({ error: 'Failed to update settings' });

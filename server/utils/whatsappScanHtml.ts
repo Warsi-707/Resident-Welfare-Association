@@ -477,8 +477,7 @@ export function getWhatsAppScanHtml(): string {
     let isConnected = false;
 
     function getAuthToken() {
-      const urlParams = new URLSearchParams(window.location.search);
-      return urlParams.get('token') || localStorage.getItem('rwa_token') || '';
+      return localStorage.getItem('rwa_auth_token') || '';
     }
 
     async function checkStatus() {

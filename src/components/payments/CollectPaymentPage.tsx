@@ -452,7 +452,7 @@ export const CollectPaymentPage: React.FC = () => {
                           {memberFloors.map((fl, idx) => (
                             <span
                               key={idx}
-                              className="inline-flex px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#F5F3FF] text-[#7C3AED]"
+                              className="inline-flex px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-blue-50 text-blue-600"
                             >
                               {fl}
                             </span>
@@ -528,7 +528,7 @@ export const CollectPaymentPage: React.FC = () => {
                                 <button
                                   type="button"
                                   onClick={() => openReversalModal(c)}
-                                  className="inline-flex items-center gap-1 px-3 py-1 bg-[#F5F3FF] hover:bg-purple-100 text-[#7C3AED] font-bold text-xs rounded-lg border border-purple-200/80 shadow-2xs transition-colors cursor-pointer"
+                                  className="inline-flex items-center gap-1 px-3 py-1 bg-blue-50 hover:bg-blue-100 text-blue-600 font-bold text-xs rounded-lg border border-blue-200/80 shadow-2xs transition-colors cursor-pointer"
                                 >
                                   <Undo2 className="w-3.5 h-3.5" /> Reversal
                                 </button>
@@ -558,7 +558,7 @@ export const CollectPaymentPage: React.FC = () => {
                               <button
                                 type="button"
                                 onClick={() => openReversalModal(c)}
-                                className="inline-flex items-center gap-1 px-3 py-1 bg-[#F5F3FF] hover:bg-purple-100 text-[#7C3AED] font-bold text-xs rounded-lg border border-purple-200/80 shadow-2xs transition-colors cursor-pointer"
+                                className="inline-flex items-center gap-1 px-3 py-1 bg-blue-50 hover:bg-blue-100 text-blue-600 font-bold text-xs rounded-lg border border-blue-200/80 shadow-2xs transition-colors cursor-pointer"
                               >
                                 <Undo2 className="w-3.5 h-3.5" /> Reversal
                               </button>
@@ -592,9 +592,6 @@ export const CollectPaymentPage: React.FC = () => {
       {activeChallan && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 p-3 sm:p-4 overflow-y-auto animate-in fade-in duration-200"
-          onClick={(e) => {
-            if (e.target === e.currentTarget) setActiveChallan(null);
-          }}
         >
           <div className="bg-white rounded-2xl p-6 max-w-lg w-full shadow-2xl border border-slate-100 space-y-4 animate-in zoom-in-95 duration-200">
             <div className="flex items-center justify-between pb-3 border-b border-slate-100">
@@ -629,7 +626,7 @@ export const CollectPaymentPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setActiveChallan(null)}
-                  className="px-5 py-2.5 bg-[#7C3AED] hover:bg-[#6D28D9] text-white text-xs font-semibold rounded-xl transition-colors cursor-pointer"
+                  className="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-xl transition-colors cursor-pointer"
                 >
                   Done
                 </button>
@@ -741,7 +738,7 @@ export const CollectPaymentPage: React.FC = () => {
                   </button>
                   <button
                     type="submit"
-                    className="px-5 py-2 bg-[#7C3AED] hover:bg-[#6D28D9] rounded-xl text-xs font-semibold text-white shadow-2xs cursor-pointer"
+                    className="px-5 py-2 bg-blue-600 hover:bg-blue-700 rounded-xl text-xs font-semibold text-white shadow-2xs cursor-pointer"
                   >
                     Confirm Collection
                   </button>
@@ -756,9 +753,6 @@ export const CollectPaymentPage: React.FC = () => {
       {reversalChallan && reversalData && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 p-3 sm:p-4 overflow-y-auto animate-in fade-in duration-200"
-          onClick={(e) => {
-            if (e.target === e.currentTarget) setReversalChallan(null);
-          }}
         >
           <div className="bg-white rounded-2xl p-6 sm:p-7 max-w-xl w-full shadow-2xl border border-slate-100 space-y-4 animate-in zoom-in-95 duration-200">
             {/* Header */}
@@ -867,7 +861,7 @@ export const CollectPaymentPage: React.FC = () => {
                 <button
                   type="submit"
                   disabled={isReversing}
-                  className="px-6 py-2.5 bg-[#7C3AED] hover:bg-[#6D28D9] rounded-xl text-xs font-semibold text-white shadow-md transition-colors cursor-pointer disabled:opacity-50"
+                  className="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 rounded-xl text-xs font-semibold text-white shadow-md transition-colors cursor-pointer disabled:opacity-50"
                 >
                   {isReversing ? 'Reversing...' : 'Confirm Reversal'}
                 </button>

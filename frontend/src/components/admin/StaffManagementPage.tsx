@@ -54,7 +54,7 @@ export const StaffManagementPage: React.FC = () => {
       <div className="flex items-center justify-end">
         <button
           onClick={() => setIsAddModalOpen(true)}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#7C3AED] hover:bg-[#6D28D9] text-white text-xs font-semibold shadow-2xs transition-colors cursor-pointer"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-2xs transition-colors cursor-pointer"
         >
           <Plus className="w-3.5 h-3.5" />
           <span>Add Staff Member</span>
@@ -73,7 +73,7 @@ export const StaffManagementPage: React.FC = () => {
             >
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-lg bg-purple-50 text-[#7C3AED] flex items-center justify-center font-bold text-xs border border-purple-100">
+                  <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-xs border border-blue-100">
                     {displayName.charAt(0)}
                   </div>
                   <div>
@@ -118,7 +118,7 @@ export const StaffManagementPage: React.FC = () => {
                 </div>
                 <div className="text-right">
                   <span className="text-[10px] text-slate-400 block">Portal Username</span>
-                  <span className="font-mono font-semibold text-[#7C3AED] text-xs">{s.username}</span>
+                  <span className="font-mono font-semibold text-blue-600 text-xs">{s.username}</span>
                 </div>
               </div>
             </div>
@@ -145,7 +145,7 @@ export const StaffManagementPage: React.FC = () => {
               <button
                 type="button"
                 onClick={handleSubmit}
-                className="px-4 py-2 text-xs font-semibold text-white bg-[#7C3AED] hover:bg-[#6D28D9] rounded-xl shadow-sm shadow-purple-500/25"
+                className="px-4 py-2 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl shadow-sm shadow-blue-500/25"
               >
                 Create Staff Account
               </button>

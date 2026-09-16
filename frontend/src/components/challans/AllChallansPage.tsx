@@ -126,7 +126,7 @@ export const AllChallansPage: React.FC = () => {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 pb-2.5 border-b border-slate-100">
           <div className="flex items-center gap-2">
             <span className="text-xs font-bold text-slate-800">Challans & Billing Register</span>
-            <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-purple-50 text-[#7C3AED] border border-purple-100">
+            <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-blue-50 text-blue-600 border border-blue-100">
               {challans.length} Total
             </span>
           </div>
@@ -142,7 +142,7 @@ export const AllChallansPage: React.FC = () => {
             {isAdmin && (
               <button
                 onClick={() => navigateTo('generate-challan')}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#7C3AED] hover:bg-[#6D28D9] text-white text-xs font-semibold shadow-2xs transition-colors cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-2xs transition-colors cursor-pointer"
               >
                 <FileSpreadsheet className="w-3.5 h-3.5" />
                 <span>Generate Challans</span>
@@ -255,7 +255,7 @@ export const AllChallansPage: React.FC = () => {
                         <div className="text-[10px] text-slate-400 font-mono flex items-center gap-1.5">
                           <span>{c.houseNumber}</span>
                           <span>&bull;</span>
-                          <span className="text-[#7C3AED] font-semibold">{c.challanNumber}</span>
+                          <span className="text-blue-600 font-semibold">{c.challanNumber}</span>
                         </div>
                       </td>
 
@@ -327,7 +327,7 @@ export const AllChallansPage: React.FC = () => {
                           </span>
                         ) : (
                           <span
-                            className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-purple-50 text-[#7C3AED] border border-purple-100"
+                            className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-blue-50 text-blue-600 border border-blue-100"
                             title="Sending pending"
                           >
                             <Clock className="w-3 h-3" />
@@ -366,7 +366,7 @@ export const AllChallansPage: React.FC = () => {
                             type="button"
                             disabled={isSendingThis}
                             onClick={() => handleSendWhatsApp(c)}
-                            className="px-2.5 py-1 bg-white hover:bg-purple-50 text-[#7C3AED] hover:text-[#6D28D9] font-bold text-xs rounded-lg border border-purple-200 shadow-2xs transition-colors cursor-pointer inline-flex items-center gap-1 disabled:opacity-50"
+                            className="px-2.5 py-1 bg-white hover:bg-blue-50 text-blue-600 hover:text-blue-700 font-bold text-xs rounded-lg border border-blue-200 shadow-2xs transition-colors cursor-pointer inline-flex items-center gap-1 disabled:opacity-50"
                             title={
                               c.whatsappStatus === 'SENT'
                                 ? 'Resend branded PDF via WhatsApp API'
@@ -374,9 +374,9 @@ export const AllChallansPage: React.FC = () => {
                             }
                           >
                             {isSendingThis ? (
-                              <Loader2 className="w-3 h-3 animate-spin text-[#7C3AED]" />
+                              <Loader2 className="w-3 h-3 animate-spin text-blue-600" />
                             ) : (
-                              <Send className="w-3 h-3 text-[#7C3AED]" />
+                              <Send className="w-3 h-3 text-blue-600" />
                             )}
                             <span>{c.whatsappStatus === 'SENT' ? 'Resend' : 'Send'}</span>
                           </button>
@@ -530,7 +530,7 @@ export const AllChallansPage: React.FC = () => {
                   setDeleteBlockedOpen(false);
                   setSelectedForDelete(null);
                 }}
-                className="px-4 py-1.5 bg-[#7C3AED] hover:bg-[#6D28D9] text-white text-xs font-semibold rounded-lg transition-colors cursor-pointer"
+                className="px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-lg transition-colors cursor-pointer"
               >
                 Understood
               </button>

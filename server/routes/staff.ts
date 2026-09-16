@@ -6,8 +6,8 @@ import { logActivity } from '../utils/logger';
 
 const router = Router();
 
-// GET /api/staff
-router.get('/', authenticateToken, async (req: AuthenticatedRequest, res: Response): Promise<any> => {
+// GET /api/staff (ADMIN or STAFF only)
+router.get('/', authenticateToken, requireRole(['ADMIN', 'COLLECTION_STAFF']), async (req: AuthenticatedRequest, res: Response): Promise<any> => {
   try {
     const staffMembers = await prisma.staff.findMany({
       orderBy: { staffCode: 'asc' },

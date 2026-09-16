@@ -9,7 +9,8 @@ import {
   LedgerEntry,
 } from '../types';
 
-const API_BASE = '/api';
+const BACKEND_URL = (((import.meta as any).env?.VITE_API_URL as string) || '').replace(/\/$/, '');
+const API_BASE = `${BACKEND_URL}/api`;
 
 /**
  * Centralized API client helper that automatically attaches

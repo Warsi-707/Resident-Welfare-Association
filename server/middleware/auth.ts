@@ -1,7 +1,16 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'rwa-super-secure-jwt-secret-key-2026-prod';
+function getJwtSecret(): string {
+  const secret = process.env.JWT_SECRET;
+  if (!secret) {
+    if (process.env.NODE_ENV === 'production') {
+      throw new Error('FATAL: JWT_SECRET environment variable is missing in production environment.');
+    }
+    return 'rwa-default-dev-jwt-secret-2026';
+  }
+  return secret;
+}
 
 export interface AuthPayload {
   userId: string;
@@ -17,22 +26,19 @@ export interface AuthenticatedRequest extends Request {
 }
 
 export function generateToken(payload: AuthPayload): string {
-  return jwt.sign(payload, JWT_SECRET, { expiresIn: '7d' });
+  return jwt.sign(payload, getJwtSecret(), { expiresIn: '7d' });
 }
 
 export function authenticateToken(req: AuthenticatedRequest, res: Response, next: NextFunction) {
   const authHeader = req.headers.authorization;
-  let token = authHeader && authHeader.startsWith('Bearer ') ? authHeader.substring(7) : null;
-  if (!token && typeof req.query.token === 'string') {
-    token = req.query.token;
-  }
+  const token = authHeader && authHeader.startsWith('Bearer ') ? authHeader.substring(7) : null;
 
   if (!token) {
     return res.status(401).json({ error: 'Authentication token required' });
   }
 
   try {
-    const decoded = jwt.verify(token, JWT_SECRET) as AuthPayload;
+    const decoded = jwt.verify(token, getJwtSecret()) as AuthPayload;
     req.user = decoded;
     next();
   } catch (err) {

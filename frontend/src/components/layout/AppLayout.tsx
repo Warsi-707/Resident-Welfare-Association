@@ -137,7 +137,7 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   const navItemClass = (isActive: boolean) =>
     `w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium transition-all duration-150 cursor-pointer ${
       isActive
-        ? 'bg-[#7C3AED] text-white shadow-xs font-semibold'
+        ? 'bg-blue-600 text-white shadow-xs font-semibold'
         : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
     }`;
 
@@ -155,8 +155,8 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                 className="w-8 h-8 rounded-lg object-contain shrink-0 border border-slate-200/80 p-0.5 bg-white shadow-2xs"
               />
             ) : (
-              <div className="w-8 h-8 rounded-lg bg-purple-50 text-[#7C3AED] border border-purple-100 flex items-center justify-center shrink-0">
-                <Building2 className="w-4 h-4 text-[#7C3AED]" />
+              <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 border border-blue-100 flex items-center justify-center shrink-0">
+                <Building2 className="w-4 h-4 text-blue-600" />
               </div>
             )}
             <div className="min-w-0 flex-1">
@@ -420,7 +420,7 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                             setSearchFocused(false);
                             setSearchQuery('');
                           }}
-                          className="px-3 py-1.5 hover:bg-purple-50/60 cursor-pointer flex items-center justify-between border-b border-slate-50 last:border-none transition-colors"
+                          className="px-3 py-1.5 hover:bg-blue-50/60 cursor-pointer flex items-center justify-between border-b border-slate-50 last:border-none transition-colors"
                         >
                           <div>
                             <p className="text-xs font-semibold text-slate-900">
@@ -466,8 +466,8 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                       Administrator
                     </p>
                   </div>
-                  {/* Soft light-purple square with rounded corners and initial */}
-                  <div className="w-8 h-8 rounded-xl bg-[#F3E8FF] text-[#7C3AED] flex items-center justify-center text-xs font-bold shrink-0">
+                  {/* Soft light-blue square with rounded corners and initial */}
+                  <div className="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-xs font-bold shrink-0">
                     {currentUser?.fullName?.charAt(0).toUpperCase() || 'A'}
                   </div>
                 </button>
@@ -484,7 +484,7 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                       </p>
                       <div className="mt-1 flex items-center gap-1.5">
                         <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                        <span className="text-[9px] font-semibold text-purple-700 bg-purple-50 px-2 py-0.5 rounded-full border border-purple-100">
+                        <span className="text-[9px] font-semibold text-blue-700 bg-blue-50 px-2 py-0.5 rounded-full border border-blue-100">
                           Administrator
                         </span>
                       </div>

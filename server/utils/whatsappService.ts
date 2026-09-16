@@ -112,9 +112,12 @@ export async function getWhatsAppCredentials(): Promise<{
  */
 export function isWhatsAppConfigured(): boolean {
   dotenv.config();
-  const token = process.env.WHATSAPP_ACCESS_TOKEN?.trim() || 'sandbox';
-  const phoneId = process.env.WHATSAPP_PHONE_NUMBER_ID?.trim() || '1092837482910';
-  return Boolean(token && phoneId);
+  const token = process.env.WHATSAPP_ACCESS_TOKEN?.trim();
+  const phoneId = process.env.WHATSAPP_PHONE_NUMBER_ID?.trim();
+  if (!token || !phoneId) return false;
+  const t = token.toLowerCase();
+  if (t === 'sandbox' || t === 'demo' || t === 'test') return false;
+  return true;
 }
 
 /**
@@ -183,17 +186,16 @@ export async function sendChallanViaWhatsApp(
   const credentials = await getWhatsAppCredentials();
   const { accessToken, phoneNumberId, templateName, apiVersion } = credentials;
 
-  // Developer Sandbox / Demo Mode support (automatic when token is sandbox, demo, test, or local fallback)
+  // If Meta Cloud API is unconfigured (sandbox/demo/test token or missing), return real failure
   if (
     !accessToken ||
     accessToken.toLowerCase() === 'sandbox' ||
     accessToken.toLowerCase() === 'demo' ||
     accessToken.toLowerCase() === 'test'
   ) {
-    const mockMessageId = `wamid.HBgM${Date.now()}_DEMO_${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
     return {
-      success: true,
-      messageId: mockMessageId,
+      success: false,
+      error: 'WhatsApp dispatch failed: Neither Baileys connection nor Meta Cloud API credentials configured.',
     };
   }
 

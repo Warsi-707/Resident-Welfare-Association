@@ -193,7 +193,7 @@ export const MonthlyCollectionReportPage: React.FC = () => {
             <tbody className="divide-y divide-slate-100 text-slate-700">
               {monthChallans.map((c) => (
                 <tr key={c.id} className="hover:bg-slate-50/60 transition-colors">
-                  <td className="py-2 px-3 font-mono font-medium text-purple-700">
+                  <td className="py-2 px-3 font-mono font-medium text-blue-600">
                     {c.challanNumber}
                   </td>
                   <td className="py-2 px-3 font-mono text-slate-600">{c.memberId}</td>

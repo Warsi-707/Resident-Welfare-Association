@@ -48,7 +48,7 @@ router.get('/live-status', async (_req: Request, res: Response): Promise<any> =>
 
 // ─── GET /api/whatsapp/status ─────────────────────────────────
 // Returns current connection state + QR code data URL if available
-router.get('/status', async (req: Request, res: Response): Promise<any> => {
+router.get('/status', authenticateToken, requireRole(['ADMIN', 'COLLECTION_STAFF']), async (req: AuthenticatedRequest, res: Response): Promise<any> => {
   try {
     const state = getWhatsAppState();
     return res.json({
@@ -98,7 +98,7 @@ router.post('/connect', authenticateToken, requireRole(['ADMIN']), async (req: A
 
 // ─── POST /api/whatsapp/reconnect ─────────────────────────────
 // Forces socket reset to generate fresh QR code
-router.post('/reconnect', async (_req: Request, res: Response): Promise<any> => {
+router.post('/reconnect', authenticateToken, requireRole(['ADMIN']), async (_req: AuthenticatedRequest, res: Response): Promise<any> => {
   try {
     reconnectWhatsApp().catch(console.error);
     await new Promise((resolve) => setTimeout(resolve, 1500));
@@ -118,7 +118,7 @@ router.post('/reconnect', async (_req: Request, res: Response): Promise<any> => 
 
 // ─── POST /api/whatsapp/disconnect ────────────────────────────
 // Logs out and clears session files
-router.post('/disconnect', async (_req: Request, res: Response): Promise<any> => {
+router.post('/disconnect', authenticateToken, requireRole(['ADMIN']), async (_req: AuthenticatedRequest, res: Response): Promise<any> => {
   try {
     await disconnectWhatsApp();
     return res.json({ success: true, message: 'WhatsApp disconnected and session cleared.' });

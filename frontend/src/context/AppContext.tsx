@@ -311,11 +311,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const addMember = async (data: any): Promise<string> => {
     try {
       const created = await api.addMember(data);
-      addToast({
-        type: 'success',
-        title: 'Member Registered',
-        description: `Resident ${created.fullName} (${created.memberId}) saved to PostgreSQL database.`,
-      });
       await refreshData();
       return created.memberId;
     } catch (err: any) {
@@ -335,11 +330,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
     try {
       await api.updateMember(target.id, updateData);
-      addToast({
-        type: 'success',
-        title: 'Member Profile Saved',
-        description: `Records for ${memberId} updated in PostgreSQL database.`,
-      });
       await refreshData();
     } catch (err: any) {
       addToast({ type: 'error', title: 'Update failed', description: err.message });

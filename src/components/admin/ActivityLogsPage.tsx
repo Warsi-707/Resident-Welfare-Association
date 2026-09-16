@@ -43,7 +43,7 @@ export const ActivityLogsPage: React.FC = () => {
     if (action.includes('VOID') || action.includes('INACTIVATED'))
       return 'bg-rose-50 text-rose-700 border-rose-200';
     if (action.includes('UPDATED')) return 'bg-amber-50 text-amber-700 border-amber-200';
-    return 'bg-purple-50 text-[#7C3AED] border-purple-200';
+    return 'bg-blue-50 text-blue-600 border-blue-200';
   };
 
   return (

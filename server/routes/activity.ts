@@ -1,11 +1,11 @@
 import { Router, Response } from 'express';
 import { prisma } from '../db';
-import { authenticateToken, AuthenticatedRequest } from '../middleware/auth';
+import { authenticateToken, requireRole, AuthenticatedRequest } from '../middleware/auth';
 
 const router = Router();
 
-// GET /api/activity
-router.get('/', authenticateToken, async (req: AuthenticatedRequest, res: Response): Promise<any> => {
+// GET /api/activity (ADMIN only)
+router.get('/', authenticateToken, requireRole(['ADMIN']), async (req: AuthenticatedRequest, res: Response): Promise<any> => {
   try {
     const logs = await prisma.activityLog.findMany({
       take: 100,

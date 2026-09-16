@@ -111,9 +111,6 @@ export const ChallanModal: React.FC<ChallanModalProps> = ({
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 p-3 sm:p-4 overflow-y-auto animate-in fade-in duration-200"
-      onClick={(e) => {
-        if (e.target === e.currentTarget) onClose();
-      }}
     >
       <div className="bg-white rounded-2xl border border-slate-200/90 shadow-2xl overflow-hidden w-full max-w-2xl mx-auto my-auto animate-in zoom-in-95 duration-200 max-h-[95vh] flex flex-col">
         {/* Header */}

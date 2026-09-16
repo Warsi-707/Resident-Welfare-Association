@@ -60,7 +60,7 @@ export const ChallanDetailPage: React.FC = () => {
         <p className="text-xs text-slate-400 mt-1">The requested voucher could not be located in the database.</p>
         <button
           onClick={() => navigateTo('challans')}
-          className="mt-4 px-4 py-2 text-xs font-semibold rounded-lg bg-[#7C3AED] hover:bg-[#6D28D9] text-white shadow-2xs transition-colors cursor-pointer"
+          className="mt-4 px-4 py-2 text-xs font-semibold rounded-lg bg-blue-600 hover:bg-blue-700 text-white shadow-2xs transition-colors cursor-pointer"
         >
           Back to All Challans
         </button>
@@ -408,7 +408,7 @@ export const ChallanDetailPage: React.FC = () => {
                 WhatsApp: FAILED
               </span>
             ) : (
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-purple-50 text-[#7C3AED] border border-purple-100">
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-50 text-blue-600 border border-blue-100">
                 <Clock className="w-3 h-3" />
                 WhatsApp: PENDING
               </span>
@@ -436,7 +436,7 @@ export const ChallanDetailPage: React.FC = () => {
           <button
             onClick={handleSendWhatsApp}
             disabled={isSendingWhatsApp}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-purple-200 bg-purple-50 hover:bg-purple-100 text-[#7C3AED] text-xs font-semibold shadow-2xs transition-colors cursor-pointer disabled:opacity-50"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-blue-200 bg-blue-50 hover:bg-blue-100 text-blue-600 text-xs font-semibold shadow-2xs transition-colors cursor-pointer disabled:opacity-50"
             title="Send or resend branded PDF directly to member WhatsApp"
           >
             {isSendingWhatsApp ? (
@@ -464,7 +464,7 @@ export const ChallanDetailPage: React.FC = () => {
                   selectedChallanId: challan.id,
                 })
               }
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#7C3AED] hover:bg-[#6D28D9] text-white text-xs font-semibold shadow-2xs transition-colors cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-2xs transition-colors cursor-pointer"
             >
               <CreditCard className="w-3.5 h-3.5" />
               <span>Collect Payment</span>
@@ -583,7 +583,7 @@ export const ChallanDetailPage: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setDeleteBlockedOpen(false)}
-                className="px-4 py-1.5 bg-[#7C3AED] hover:bg-[#6D28D9] text-white text-xs font-semibold rounded-lg transition-colors cursor-pointer"
+                className="px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-lg transition-colors cursor-pointer"
               >
                 Understood
               </button>

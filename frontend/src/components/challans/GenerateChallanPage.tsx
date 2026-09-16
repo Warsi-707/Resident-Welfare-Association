@@ -222,8 +222,8 @@ export const GenerateChallanPage: React.FC = () => {
       {/* CARD 1: Main Generation Form */}
       <div className="bg-white rounded-xl border border-slate-200/80 shadow-2xs p-3.5 sm:p-4 space-y-3">
         {/* Notice Strip */}
-        <div className="bg-[#F5F3FF] rounded-lg px-3 py-2 border border-purple-100/70 flex items-start gap-2">
-          <Send className="w-3.5 h-3.5 text-[#7C3AED] shrink-0 mt-0.5" />
+        <div className="bg-blue-50 rounded-lg px-3 py-2 border border-blue-100 flex items-start gap-2">
+          <Send className="w-3.5 h-3.5 text-blue-600 shrink-0 mt-0.5" />
           <p className="text-[11px] text-slate-600 font-normal leading-normal">
             Generate monthly challans with 1-click. Branded PDFs will be automatically created and
             dispatched directly to each member&apos;s WhatsApp number via the official WhatsApp Business
@@ -296,7 +296,7 @@ export const GenerateChallanPage: React.FC = () => {
               <button
                 type="button"
                 onClick={handleToggleSelectAll}
-                className="text-[10px] font-bold text-[#7C3AED] hover:underline cursor-pointer"
+                className="text-[10px] font-bold text-blue-600 hover:underline cursor-pointer"
               >
                 {isAllSelected ? 'Deselect All' : 'Select All'}
               </button>
@@ -307,13 +307,13 @@ export const GenerateChallanPage: React.FC = () => {
               onClick={() => setIsDropdownOpen((prev) => !prev)}
               className={`w-full px-3 py-1.5 text-xs rounded-lg border bg-white flex items-center justify-between cursor-pointer transition-all ${
                 isDropdownOpen
-                  ? 'border-[#7C3AED] ring-2 ring-purple-100'
+                  ? 'border-blue-600 ring-2 ring-blue-100'
                   : 'border-slate-200 hover:border-slate-300'
               }`}
             >
               <div className="flex items-center gap-1.5 truncate">
                 {isAllSelected ? (
-                  <Users className="w-3.5 h-3.5 text-[#7C3AED] shrink-0" />
+                  <Users className="w-3.5 h-3.5 text-blue-600 shrink-0" />
                 ) : selectedMemberCodes.length === 1 ? (
                   <User className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
                 ) : (
@@ -330,7 +330,7 @@ export const GenerateChallanPage: React.FC = () => {
                 </span>
               </div>
               <div className="flex items-center gap-1.5 shrink-0">
-                <span className="px-1.5 py-0.5 rounded-md text-[10px] font-bold bg-purple-50 text-[#7C3AED] border border-purple-100">
+                <span className="px-1.5 py-0.5 rounded-md text-[10px] font-bold bg-blue-50 text-blue-600 border border-blue-100">
                   {selectedMemberCodes.length}
                 </span>
                 <ChevronDown
@@ -352,7 +352,7 @@ export const GenerateChallanPage: React.FC = () => {
                     value={memberSearchQuery}
                     onChange={(e) => setMemberSearchQuery(e.target.value)}
                     placeholder="Search member name or plot..."
-                    className="w-full pl-8 pr-2.5 py-1 text-xs rounded-lg border border-slate-200 text-slate-800 bg-slate-50 focus:bg-white focus:outline-none focus:border-[#7C3AED]"
+                    className="w-full pl-8 pr-2.5 py-1 text-xs rounded-lg border border-slate-200 text-slate-800 bg-slate-50 focus:bg-white focus:outline-none focus:border-blue-600"
                   />
                 </div>
 
@@ -363,7 +363,7 @@ export const GenerateChallanPage: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => setSelectedMemberCodes(activeMembers.map((m) => m.memberId))}
-                      className="font-bold text-[#7C3AED] hover:underline cursor-pointer"
+                      className="font-bold text-blue-600 hover:underline cursor-pointer"
                     >
                       Select All
                     </button>
@@ -388,7 +388,7 @@ export const GenerateChallanPage: React.FC = () => {
                         onClick={() => handleToggleMember(member.memberId)}
                         className={`group p-2 rounded-lg border text-xs flex items-center justify-between cursor-pointer transition-colors ${
                           isSelected
-                            ? 'bg-purple-50/60 border-purple-200'
+                            ? 'bg-blue-50/60 border-blue-200'
                             : 'bg-white hover:bg-slate-50 border-slate-100'
                         }`}
                       >
@@ -397,7 +397,7 @@ export const GenerateChallanPage: React.FC = () => {
                             type="checkbox"
                             checked={isSelected}
                             onChange={() => {}} // Handled by row click
-                            className="w-3.5 h-3.5 rounded text-[#7C3AED] focus:ring-[#7C3AED] accent-[#7C3AED] shrink-0"
+                            className="w-3.5 h-3.5 rounded text-blue-600 focus:ring-blue-600 accent-blue-600 shrink-0"
                           />
                           <div className="min-w-0">
                             <div className="flex items-center gap-1.5">
@@ -419,7 +419,7 @@ export const GenerateChallanPage: React.FC = () => {
                           type="button"
                           onClick={(e) => handleSelectOnly(member.memberId, e)}
                           title="Sirf is member ko select karein"
-                          className="opacity-0 group-hover:opacity-100 text-[10px] px-2 py-0.5 rounded bg-white hover:bg-purple-100 border border-purple-200 text-[#7C3AED] font-semibold transition-opacity shrink-0 ml-2 cursor-pointer"
+                          className="opacity-0 group-hover:opacity-100 text-[10px] px-2 py-0.5 rounded bg-white hover:bg-blue-100 border border-blue-200 text-blue-600 font-semibold transition-opacity shrink-0 ml-2 cursor-pointer"
                         >
                           Only
                         </button>
@@ -439,7 +439,7 @@ export const GenerateChallanPage: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => setIsDropdownOpen(false)}
-                    className="px-2.5 py-1 bg-[#7C3AED] text-white text-[11px] font-bold rounded-lg hover:bg-[#6D28D9] transition-colors cursor-pointer"
+                    className="px-2.5 py-1 bg-blue-600 text-white text-[11px] font-bold rounded-lg hover:bg-blue-700 transition-colors cursor-pointer"
                   >
                     Done
                   </button>
@@ -463,7 +463,7 @@ export const GenerateChallanPage: React.FC = () => {
             type="button"
             disabled={isGenerating || selectedMemberCodes.length === 0}
             onClick={handleGenerate}
-            className="px-4 py-1.5 bg-[#7C3AED] hover:bg-[#6D28D9] disabled:opacity-60 text-white text-xs font-semibold rounded-lg shadow-xs transition-colors cursor-pointer inline-flex items-center gap-1.5"
+            className="px-4 py-1.5 bg-blue-600 hover:bg-blue-700 disabled:opacity-60 text-white text-xs font-semibold rounded-lg shadow-xs transition-colors cursor-pointer inline-flex items-center gap-1.5"
           >
             {isGenerating ? (
               <>
@@ -494,7 +494,7 @@ export const GenerateChallanPage: React.FC = () => {
             <h2 className="text-sm font-bold text-slate-900 tracking-tight">
               Generated Challans
             </h2>
-            <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-purple-50 text-[#7C3AED] border border-purple-100">
+            <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-blue-50 text-blue-600 border border-blue-100">
               {filteredChallans.length} challans
             </span>
           </div>
@@ -659,7 +659,7 @@ export const GenerateChallanPage: React.FC = () => {
                           {memberFloors.map((fl, idx) => (
                             <span
                               key={idx}
-                              className="inline-flex px-2 py-0.5 rounded-full text-[9px] font-bold bg-[#F5F3FF] text-[#7C3AED]"
+                              className="inline-flex px-2 py-0.5 rounded-full text-[9px] font-bold bg-blue-50 text-blue-600"
                             >
                               {fl}
                             </span>
@@ -735,7 +735,7 @@ export const GenerateChallanPage: React.FC = () => {
                           </span>
                         ) : (
                           <span
-                            className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-purple-50 text-[#7C3AED] border border-purple-100"
+                            className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-blue-50 text-blue-600 border border-blue-100"
                             title="Sending pending"
                           >
                             <Clock className="w-3 h-3" />
@@ -774,7 +774,7 @@ export const GenerateChallanPage: React.FC = () => {
                             type="button"
                             disabled={isSendingThis}
                             onClick={() => handleSendWhatsApp(c)}
-                            className="px-2.5 py-1 bg-white hover:bg-purple-50 text-[#7C3AED] hover:text-[#6D28D9] font-bold text-xs rounded-lg border border-purple-200 shadow-2xs transition-colors cursor-pointer inline-flex items-center gap-1 disabled:opacity-50"
+                            className="px-2.5 py-1 bg-white hover:bg-blue-50 text-blue-600 hover:text-blue-700 font-bold text-xs rounded-lg border border-blue-200 shadow-2xs transition-colors cursor-pointer inline-flex items-center gap-1 disabled:opacity-50"
                             title={
                               c.whatsappStatus === 'SENT'
                                 ? 'Resend branded PDF via WhatsApp API'
@@ -782,9 +782,9 @@ export const GenerateChallanPage: React.FC = () => {
                             }
                           >
                             {isSendingThis ? (
-                              <Loader2 className="w-3 h-3 animate-spin text-[#7C3AED]" />
+                              <Loader2 className="w-3 h-3 animate-spin text-blue-600" />
                             ) : (
-                              <Send className="w-3 h-3 text-[#7C3AED]" />
+                              <Send className="w-3 h-3 text-blue-600" />
                             )}
                             <span>{c.whatsappStatus === 'SENT' ? 'Resend' : 'Send'}</span>
                           </button>
@@ -845,7 +845,7 @@ export const GenerateChallanPage: React.FC = () => {
             {/* Header */}
             <div className="flex items-center justify-between border-b border-slate-100 pb-3">
               <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-full bg-purple-100 text-[#7C3AED] flex items-center justify-center shrink-0">
+                <div className="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center shrink-0">
                   <Send className="w-4 h-4" />
                 </div>
                 <div>
@@ -940,7 +940,7 @@ export const GenerateChallanPage: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setBulkResultOpen(false)}
-                className="px-4 py-1.5 bg-[#7C3AED] hover:bg-[#6D28D9] text-white text-xs font-semibold rounded-lg shadow-2xs transition-colors cursor-pointer"
+                className="px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-lg shadow-2xs transition-colors cursor-pointer"
               >
                 Done
               </button>

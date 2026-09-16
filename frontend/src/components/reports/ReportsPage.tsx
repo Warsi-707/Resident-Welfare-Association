@@ -185,7 +185,7 @@ export const ReportsPage: React.FC = () => {
         <div className="flex items-center justify-between gap-2 pb-2.5 border-b border-slate-100">
           <div className="flex items-center gap-2">
             <span className="text-xs font-bold text-slate-800">Financial Reports & Analytics</span>
-            <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-purple-50 text-[#7C3AED] border border-purple-100">
+            <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-blue-50 text-blue-600 border border-blue-100">
               Audit Ready
             </span>
           </div>
@@ -388,13 +388,13 @@ export const ReportsPage: React.FC = () => {
         <div className="pt-2.5 space-y-2">
           <div className="flex items-center justify-between text-xs font-semibold text-slate-700">
             <span>Collection Progress</span>
-            <span className="font-bold text-[#7C3AED] bg-purple-50 px-2.5 py-0.5 rounded-full border border-purple-100 text-[11px]">
+            <span className="font-bold text-blue-600 bg-blue-50 px-2.5 py-0.5 rounded-full border border-blue-100 text-[11px]">
               {collectionPercentage}%
             </span>
           </div>
           <div className="w-full h-2.5 bg-slate-100 border border-slate-200/90 rounded-full overflow-hidden p-0.5 shadow-2xs">
             <div
-              className="h-full bg-gradient-to-r from-[#7C3AED] to-purple-500 rounded-full transition-all duration-500"
+              className="h-full bg-gradient-to-r from-blue-600 to-blue-500 rounded-full transition-all duration-500"
               style={{ width: `${Math.min(100, Math.max(0, collectionPercentage))}%` }}
             />
           </div>

@@ -32,8 +32,8 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({ status, size = 'md' })
     colorClasses = 'bg-amber-50 text-amber-700 border-amber-200';
     dotColor = 'bg-amber-500';
   } else if (normalized === 'online') {
-    colorClasses = 'bg-purple-50 text-[#7C3AED] border-purple-200';
-    dotColor = 'bg-[#7C3AED]';
+    colorClasses = 'bg-blue-50 text-blue-600 border-blue-200';
+    dotColor = 'bg-blue-600';
   } else if (normalized === 'full paid') {
     colorClasses = 'bg-emerald-50 text-emerald-700 border-emerald-200';
     dotColor = 'bg-emerald-500';

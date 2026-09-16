@@ -38,7 +38,7 @@ export const MemberDetailPage: React.FC = () => {
         <p className="text-sm text-slate-500 font-medium">Member account not found or invalid ID.</p>
         <button
           onClick={() => navigateTo('members')}
-          className="mt-3 px-4 py-2 text-xs text-[#7C3AED] hover:underline font-semibold"
+          className="mt-3 px-4 py-2 text-xs text-blue-600 hover:underline font-semibold"
         >
           Return to Member Directory
         </button>
@@ -127,7 +127,7 @@ export const MemberDetailPage: React.FC = () => {
 
           <button
             onClick={() => navigateTo('collect-payment', { selectedMemberId: member.memberId })}
-            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-[#7C3AED] hover:bg-[#6D28D9] text-white text-xs font-semibold shadow-2xs transition-colors cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-2xs transition-colors cursor-pointer"
           >
             <CreditCard className="w-3.5 h-3.5" />
             <span>Collect Payment</span>
@@ -139,7 +139,7 @@ export const MemberDetailPage: React.FC = () => {
       <div className="no-print bg-white rounded-2xl border border-slate-200/80 p-6 shadow-2xs">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-xl bg-purple-50 text-[#7C3AED] border border-purple-100 flex items-center justify-center font-bold text-base shadow-xs">
+            <div className="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 border border-blue-100 flex items-center justify-center font-bold text-base shadow-xs">
               {member.fullName.charAt(0)}
             </div>
             <div>
@@ -148,7 +148,7 @@ export const MemberDetailPage: React.FC = () => {
                 <StatusBadge status={member.status} size="sm" />
               </div>
               <div className="flex items-center gap-3 text-xs text-slate-500 mt-1 flex-wrap">
-                <span className="font-mono font-semibold text-[#7C3AED]">{member.memberId}</span>
+                <span className="font-mono font-semibold text-blue-600">{member.memberId}</span>
                 <span>&bull;</span>
                 <span className="flex items-center gap-1 font-medium text-slate-700">
                   <Home className="w-3.5 h-3.5 text-slate-400" /> {member.houseNumber}
@@ -220,7 +220,7 @@ export const MemberDetailPage: React.FC = () => {
             onClick={() => setActiveTab(tab.id as any)}
             className={`px-3.5 py-2 text-xs font-semibold rounded-xl transition-colors ${
               activeTab === tab.id
-                ? 'bg-purple-50 text-[#7C3AED] shadow-2xs'
+                ? 'bg-blue-50 text-blue-600 shadow-2xs'
                 : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
             }`}
           >
@@ -244,7 +244,7 @@ export const MemberDetailPage: React.FC = () => {
               </div>
               <div className="py-2.5 grid grid-cols-3">
                 <dt className="text-slate-500 font-medium">Member ID</dt>
-                <dd className="col-span-2 text-[#7C3AED] font-mono font-bold">{member.memberId}</dd>
+                <dd className="col-span-2 text-blue-600 font-mono font-bold">{member.memberId}</dd>
               </div>
               <div className="py-2.5 grid grid-cols-3">
                 <dt className="text-slate-500 font-medium">House Number</dt>
@@ -312,7 +312,7 @@ export const MemberDetailPage: React.FC = () => {
             <div className="pt-4 border-t border-slate-100 flex gap-2">
               <button
                 onClick={() => navigateTo('collect-payment', { selectedMemberId: member.memberId })}
-                className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#7C3AED] hover:bg-[#6D28D9] text-white text-xs font-semibold shadow-sm shadow-purple-500/25 transition-colors"
+                className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-sm shadow-blue-500/25 transition-colors"
               >
                 <CreditCard className="w-4 h-4" />
                 <span>Collect Payment</span>
@@ -350,7 +350,7 @@ export const MemberDetailPage: React.FC = () => {
                 <tbody className="divide-y divide-slate-100 text-slate-700">
                   {memberChallans.map((c) => (
                     <tr key={c.id} className="hover:bg-slate-50/60 transition-colors">
-                      <td className="py-3 px-4 font-mono font-medium text-[#7C3AED]">
+                      <td className="py-3 px-4 font-mono font-medium text-blue-600">
                         {c.challanNumber}
                       </td>
                       <td className="py-3 px-4 font-medium text-slate-900">{c.month}</td>
@@ -418,7 +418,7 @@ export const MemberDetailPage: React.FC = () => {
                 <tbody className="divide-y divide-slate-100 text-slate-700">
                   {memberPayments.map((p) => (
                     <tr key={p.id} className="hover:bg-slate-50/60 transition-colors">
-                      <td className="py-3 px-4 font-mono font-medium text-[#7C3AED]">
+                      <td className="py-3 px-4 font-mono font-medium text-blue-600">
                         {p.receiptNumber}
                       </td>
                       <td className="py-3 px-4 text-slate-600">{formatDate(p.paymentDate)}</td>
@@ -464,10 +464,10 @@ export const MemberDetailPage: React.FC = () => {
             {memberPayments.map((p) => (
               <div
                 key={p.id}
-                className="p-4 rounded-xl border border-slate-200 hover:border-purple-300 bg-slate-50/50 hover:bg-white transition-all shadow-2xs"
+                className="p-4 rounded-xl border border-slate-200 hover:border-blue-300 bg-slate-50/50 hover:bg-white transition-all shadow-2xs"
               >
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-xs font-bold text-[#7C3AED]">{p.receiptNumber}</span>
+                  <span className="font-mono text-xs font-bold text-blue-600">{p.receiptNumber}</span>
                   <StatusBadge status={p.paymentMethod} size="sm" />
                 </div>
                 <p className="text-lg font-bold font-mono text-slate-900 mt-2">
@@ -477,7 +477,7 @@ export const MemberDetailPage: React.FC = () => {
                 <div className="mt-3 pt-2 border-t border-slate-200/70 flex justify-end">
                   <button
                     onClick={() => navigateTo('receipt-detail', { receiptId: p.id })}
-                    className="px-3 py-1 text-xs font-semibold bg-[#7C3AED] hover:bg-[#6D28D9] text-white rounded-lg transition-colors"
+                    className="px-3 py-1 text-xs font-semibold bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
                   >
                     View / Print
                   </button>
@@ -526,7 +526,7 @@ export const MemberDetailPage: React.FC = () => {
                     <tr key={l.id} className="hover:bg-slate-50/70">
                       <td className="py-2.5 px-4 font-sans text-slate-600">{formatDate(l.date)}</td>
                       <td className="py-2.5 px-4 font-sans">{l.month}</td>
-                      <td className="py-2.5 px-4 font-semibold text-[#7C3AED]">{l.reference}</td>
+                      <td className="py-2.5 px-4 font-semibold text-blue-600">{l.reference}</td>
                       <td className="py-2.5 px-4 font-sans text-slate-700">{l.description}</td>
                       <td className="py-2.5 px-4 text-right text-slate-900">
                         {l.debit > 0 ? formatCurrency(l.debit) : '—'}

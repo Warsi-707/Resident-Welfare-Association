@@ -228,7 +228,7 @@ export const PaymentStatusReportPage: React.FC = () => {
                   const m = members.find((mem) => mem.memberId === c.memberId);
                   return (
                     <tr key={c.id} className="hover:bg-slate-50/60 transition-colors">
-                      <td className="py-3 px-4 font-mono font-medium text-[#7C3AED]">
+                      <td className="py-3 px-4 font-mono font-medium text-blue-600">
                         {c.challanNumber}
                       </td>
                       <td className="py-3 px-4 font-medium text-slate-900">
@@ -266,7 +266,7 @@ export const PaymentStatusReportPage: React.FC = () => {
                                 selectedChallanId: c.id,
                               })
                             }
-                            className="inline-flex items-center gap-1 px-2.5 py-1 bg-purple-50 text-[#7C3AED] hover:bg-purple-100 rounded-lg text-[11px] font-semibold transition-colors"
+                            className="inline-flex items-center gap-1 px-2.5 py-1 bg-blue-50 text-blue-600 hover:bg-blue-100 rounded-lg text-[11px] font-semibold transition-colors"
                           >
                             <CreditCard className="w-3 h-3" />
                             <span>Collect</span>

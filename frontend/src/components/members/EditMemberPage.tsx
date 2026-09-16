@@ -60,7 +60,7 @@ export const EditMemberPage: React.FC = () => {
         <p className="text-sm text-slate-500">Member record not found.</p>
         <button
           onClick={() => navigateTo('members')}
-          className="mt-3 px-4 py-2 rounded-xl bg-[#7C3AED] text-white text-xs font-semibold cursor-pointer"
+          className="mt-3 px-4 py-2 rounded-xl bg-blue-600 text-white text-xs font-semibold cursor-pointer"
         >
           Return to Members
         </button>
@@ -140,9 +140,6 @@ export const EditMemberPage: React.FC = () => {
   return (
     <div
       className="fixed inset-0 bg-slate-900/40 z-50 flex items-center justify-center p-3 sm:p-4 overflow-y-auto animate-in fade-in duration-200"
-      onClick={(e) => {
-        if (e.target === e.currentTarget) navigateTo('members');
-      }}
     >
       <div className="bg-white rounded-2xl border border-slate-200/90 shadow-2xl overflow-hidden w-full max-w-xl mx-auto my-auto animate-in zoom-in-95 duration-200">
         {/* Header */}
@@ -151,7 +148,7 @@ export const EditMemberPage: React.FC = () => {
             <h2 className="text-base sm:text-lg font-bold text-slate-900 tracking-tight">
               Edit Member
             </h2>
-            <span className="text-xs font-mono font-bold text-[#7C3AED] bg-purple-50 px-2.5 py-0.5 rounded-lg border border-purple-100">
+            <span className="text-xs font-mono font-bold text-blue-600 bg-blue-50 px-2.5 py-0.5 rounded-lg border border-blue-100">
               {member.memberId}
             </span>
           </div>
@@ -250,7 +247,7 @@ export const EditMemberPage: React.FC = () => {
                     selectedFloors.map((fl) => (
                       <span
                         key={fl}
-                        className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-semibold bg-purple-50 text-[#7C3AED] border border-purple-100"
+                        className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-semibold bg-blue-50 text-blue-600 border border-blue-100"
                       >
                         {fl}
                         <span
@@ -258,7 +255,7 @@ export const EditMemberPage: React.FC = () => {
                             e.stopPropagation();
                             toggleFloor(fl);
                           }}
-                          className="hover:text-purple-900 rounded-full cursor-pointer ml-0.5"
+                          className="hover:text-blue-900 rounded-full cursor-pointer ml-0.5"
                           title={`Remove ${fl}`}
                         >
                           <X className="w-3 h-3" />
@@ -282,7 +279,7 @@ export const EditMemberPage: React.FC = () => {
                           onClick={() => toggleFloor(floor)}
                           className={`flex items-center justify-between px-3 py-2 rounded-lg text-xs cursor-pointer select-none transition-colors ${
                             isSelected
-                              ? 'bg-purple-50/80 text-purple-900 font-semibold'
+                              ? 'bg-blue-50/80 text-blue-900 font-semibold'
                               : 'hover:bg-slate-50 text-slate-700'
                           }`}
                         >
@@ -290,7 +287,7 @@ export const EditMemberPage: React.FC = () => {
                           <div
                             className={`w-4 h-4 rounded border flex items-center justify-center transition-colors ${
                               isSelected
-                                ? 'bg-[#7C3AED] border-[#7C3AED] text-white'
+                                ? 'bg-blue-600 border-blue-600 text-white'
                                 : 'border-slate-300 bg-white'
                             }`}
                           >
@@ -305,7 +302,7 @@ export const EditMemberPage: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => setSelectedFloors([...FLOOR_OPTIONS])}
-                      className="text-[#7C3AED] hover:underline font-semibold cursor-pointer"
+                      className="text-blue-600 hover:underline font-semibold cursor-pointer"
                     >
                       Select All
                     </button>
@@ -386,7 +383,7 @@ export const EditMemberPage: React.FC = () => {
             <button
               type="submit"
               disabled={submitting}
-              className="px-6 py-2.5 rounded-xl bg-[#7C3AED] hover:bg-[#6D28D9] text-white text-xs font-semibold shadow-md shadow-purple-500/25 transition-colors cursor-pointer disabled:opacity-50"
+              className="px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-md shadow-blue-500/25 transition-colors cursor-pointer disabled:opacity-50"
             >
               {submitting ? 'Saving...' : 'Save Member'}
             </button>

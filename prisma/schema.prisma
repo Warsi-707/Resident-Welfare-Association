@@ -21,6 +21,8 @@ model User {
   contactNumber String?
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
+
+  @@index([role])
 }
 
 model Member {
@@ -42,6 +44,8 @@ model Member {
 
   challans        Challan[]
   payments        Payment[]
+
+  @@index([status])
 }
 
 model Staff {
@@ -84,6 +88,10 @@ model Challan {
   allocations     PaymentAllocation[]
 
   @@unique([memberId, monthKey])
+  @@index([memberId])
+  @@index([monthKey])
+  @@index([status])
+  @@index([year])
 }
 
 model Payment {
@@ -111,6 +119,10 @@ model Payment {
 
   allocations     PaymentAllocation[]
   receipt         Receipt?
+
+  @@index([memberId])
+  @@index([isVoid])
+  @@index([paymentDate])
 }
 
 model PaymentAllocation {
@@ -121,6 +133,9 @@ model PaymentAllocation {
   challan         Challan  @relation(fields: [challanId], references: [id], onDelete: Cascade)
   allocatedAmount Float
   createdAt       DateTime @default(now())
+
+  @@index([paymentId])
+  @@index([challanId])
 }
 
 model Receipt {
@@ -162,4 +177,6 @@ model ActivityLog {
   date        String
   time        String
   createdAt   DateTime @default(now())
+
+  @@index([createdAt])
 }

@@ -1,10 +1,8 @@
 import { Router, Response } from 'express';
 import bcrypt from 'bcryptjs';
 import { prisma } from '../db';
-import { authenticateToken, generateToken, AuthenticatedRequest } from '../middleware/auth';
+import { authenticateToken, generateToken, AuthenticatedRequest, requireRole } from '../middleware/auth';
 import { logActivity } from '../utils/logger';
-
-import { ensureDatabaseInitialized } from '../utils/dbInit';
 
 const router = Router();
 
@@ -17,13 +15,8 @@ router.post('/login', async (req, res): Promise<any> => {
       return res.status(400).json({ error: 'Username and password are required' });
     }
 
-    // Ensure database tables and default admin exist
-    await ensureDatabaseInitialized().catch((initErr) => {
-      console.warn('[Auth] Database init check skipped or failed:', initErr?.message);
-    });
-
-    const cleanUser = username.trim();
-    let user = await prisma.user.findFirst({
+    const cleanUser = String(username).trim();
+    const user = await prisma.user.findFirst({
       where: {
         OR: [
           { username: { equals: cleanUser, mode: 'insensitive' } },
@@ -31,31 +24,6 @@ router.post('/login', async (req, res): Promise<any> => {
         ],
       },
     });
-
-    // Ensure default admin always works with credentials admin / admin123
-    if (cleanUser.toLowerCase() === 'admin' && password === 'admin123') {
-      const defaultHash = await bcrypt.hash('admin123', 10);
-      try {
-        user = await prisma.user.upsert({
-          where: { username: 'admin' },
-          update: {
-            passwordHash: defaultHash,
-            status: 'ACTIVE',
-          },
-          create: {
-            username: 'admin',
-            passwordHash: defaultHash,
-            fullName: 'Administrator',
-            role: 'ADMIN',
-            status: 'ACTIVE',
-            email: 'admin@rwa-block12.org',
-            contactNumber: '+92 300 8219401',
-          },
-        });
-      } catch (upsertErr: any) {
-        console.warn('[Auth] Auto-upsert admin failed:', upsertErr?.message);
-      }
-    }
 
     if (!user) {
       return res.status(401).json({ error: 'Invalid username or password' });
@@ -81,14 +49,14 @@ router.post('/login', async (req, res): Promise<any> => {
       staffId: user.staffId,
     });
 
-    await logActivity({
+    logActivity({
       user: user.fullName,
       role: user.role,
       action: 'User Login',
       module: 'Authentication',
       description: `${user.fullName} (${user.username}) authenticated successfully`,
       ipAddress: req.ip,
-    });
+    }).catch((err) => console.error('Failed to log activity:', err));
 
     // Find member code if MEMBER
     let memberCode: string | undefined;
@@ -175,8 +143,8 @@ router.post('/logout', authenticateToken, async (req: AuthenticatedRequest, res:
   return res.json({ message: 'Logged out successfully' });
 });
 
-// GET /api/auth/demo-accounts
-router.get('/demo-accounts', async (_req, res): Promise<any> => {
+// GET /api/auth/demo-accounts (ADMIN or Dev only)
+router.get('/demo-accounts', authenticateToken, requireRole(['ADMIN']), async (_req, res): Promise<any> => {
   const users = await prisma.user.findMany({
     select: {
       username: true,

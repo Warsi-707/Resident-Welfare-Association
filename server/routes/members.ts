@@ -46,13 +46,14 @@ async function calculateMemberFinancials(memberId: string) {
   };
 }
 
-// GET /api/members
-router.get('/', authenticateToken, async (req: AuthenticatedRequest, res: Response): Promise<any> => {
+// GET /api/members (ADMIN or STAFF only)
+router.get('/', authenticateToken, requireRole(['ADMIN', 'COLLECTION_STAFF']), async (req: AuthenticatedRequest, res: Response): Promise<any> => {
   try {
     const members = await prisma.member.findMany({
-      orderBy: { memberCode: 'asc' },
+      orderBy: [{ createdAt: 'desc' }, { memberCode: 'desc' }],
       include: {
         challans: {
+          where: { balance: { gt: 0 } },
           select: {
             id: true,
             monthKey: true,
@@ -130,6 +131,12 @@ router.get('/:id', authenticateToken, async (req: AuthenticatedRequest, res: Res
 
     if (!member) {
       return res.status(404).json({ error: 'Member not found' });
+    }
+
+    if (req.user?.role === 'MEMBER') {
+      if (req.user.memberId !== member.id && req.user.memberId !== member.memberCode) {
+        return res.status(403).json({ error: 'Access denied: You can only access your own member profile' });
+      }
     }
 
     const financials = await calculateMemberFinancials(member.id);
@@ -529,6 +536,14 @@ router.put('/:id', authenticateToken, requireRole(['ADMIN']), async (req: Authen
         });
       }
 
+      if (status !== undefined && status !== existing.status) {
+        const isInactive = String(status).toLowerCase() === 'inactive';
+        await tx.user.updateMany({
+          where: { memberId: existing.id },
+          data: { status: isInactive ? 'INACTIVE' : 'ACTIVE' },
+        });
+      }
+
       return member;
     });
 
@@ -589,10 +604,20 @@ router.patch('/:id/toggle-status', authenticateToken, requireRole(['ADMIN']), as
     }
 
     const newStatus = existing.status === 'Active' ? 'Inactive' : 'Active';
+    const newAccountStatus = newStatus === 'Active' ? 'ACTIVE' : 'INACTIVE';
 
-    const updated = await prisma.member.update({
-      where: { id: existing.id },
-      data: { status: newStatus },
+    const updated = await prisma.$transaction(async (tx) => {
+      const m = await tx.member.update({
+        where: { id: existing.id },
+        data: { status: newStatus },
+      });
+
+      await tx.user.updateMany({
+        where: { memberId: existing.id },
+        data: { status: newAccountStatus },
+      });
+
+      return m;
     });
 
     await logActivity({

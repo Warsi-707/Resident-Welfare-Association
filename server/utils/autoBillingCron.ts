@@ -107,7 +107,7 @@ export async function runAutoBillingJob(): Promise<void> {
             arrearsAmount,
             totalAmount,
             paidAmount: 0,
-            balance: totalAmount,
+            balance: baseAmount,
             status: 'Unpaid',
             generatedDate: now.toISOString().split('T')[0],
             whatsappStatus: 'PENDING',

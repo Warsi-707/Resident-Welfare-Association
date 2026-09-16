@@ -312,7 +312,7 @@ export const SettingsPage: React.FC = () => {
 
             <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
               <label className="cursor-pointer inline-flex items-center gap-1.5 px-3.5 py-2 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold rounded-xl border border-slate-200 shadow-2xs transition-colors">
-                <UploadCloud className="w-3.5 h-3.5 text-[#7C3AED]" />
+                <UploadCloud className="w-3.5 h-3.5 text-blue-600" />
                 <span>{isUploadingLogo ? 'Uploading...' : settings.logoUrl ? 'Change Logo' : 'Upload Logo'}</span>
                 <input
                   type="file"
@@ -338,7 +338,7 @@ export const SettingsPage: React.FC = () => {
           {/* ═══════════════════════════════════════════════════
               WHATSAPP BAILEYS CONNECTION PANEL
           ═══════════════════════════════════════════════════ */}
-          <div className="p-5 bg-gradient-to-br from-emerald-50/50 via-white to-purple-50/30 border border-emerald-100 rounded-2xl space-y-4">
+          <div className="p-5 bg-gradient-to-br from-emerald-50/50 via-white to-blue-50/30 border border-emerald-100 rounded-2xl space-y-4">
             {/* Header */}
             <div className="flex items-center justify-between pb-3 border-b border-emerald-100/60">
               <div className="flex items-center gap-2.5">
@@ -480,7 +480,7 @@ export const SettingsPage: React.FC = () => {
             {waStatus.connected && (
               <div className="pt-3 border-t border-emerald-100/60">
                 <p className="text-[11px] font-semibold text-slate-700 mb-2 flex items-center gap-1">
-                  <Smartphone className="w-3.5 h-3.5 text-[#7C3AED]" />
+                  <Smartphone className="w-3.5 h-3.5 text-blue-600" />
                   Test Message Bhejein (verify karein)
                 </p>
                 <div className="flex items-center gap-2">
@@ -607,7 +607,7 @@ export const SettingsPage: React.FC = () => {
             <div className="pt-2 flex justify-end">
               <button
                 type="submit"
-                className="px-6 py-2.5 bg-[#7C3AED] hover:bg-[#6D28D9] text-white text-xs font-semibold rounded-xl shadow-md transition-colors cursor-pointer"
+                className="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-xl shadow-md transition-colors cursor-pointer"
               >
                 Save Settings
               </button>

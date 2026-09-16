@@ -68,7 +68,7 @@ export const PaymentHistoryPage: React.FC = () => {
             <h2 className="text-base font-bold text-slate-900 tracking-tight">
               Payment & Receipt Register
             </h2>
-            <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-purple-50 text-[#7C3AED] border border-purple-100">
+            <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-blue-50 text-blue-600 border border-blue-100">
               {payments.length} Transactions
             </span>
           </div>
@@ -87,7 +87,7 @@ export const PaymentHistoryPage: React.FC = () => {
           </button>
           <button
             onClick={() => navigateTo('collect-payment')}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#7C3AED] hover:bg-[#6D28D9] text-white text-xs font-semibold shadow-2xs transition-colors"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-2xs transition-colors"
           >
             <Plus className="w-3.5 h-3.5" />
             <span>Collect Payment</span>
@@ -184,10 +184,10 @@ export const PaymentHistoryPage: React.FC = () => {
                 paginatedPayments.map((p) => (
                   <tr
                     key={p.id}
-                    className="hover:bg-purple-50/30 transition-colors group cursor-pointer"
+                    className="hover:bg-blue-50/30 transition-colors group cursor-pointer"
                     onClick={() => navigateTo('receipt-detail', { paymentId: p.id })}
                   >
-                    <td className="py-2 px-3 font-mono font-medium text-[#7C3AED]">
+                    <td className="py-2 px-3 font-mono font-medium text-blue-600">
                       {p.receiptNumber}
                     </td>
                     <td className="py-2 px-3 font-semibold text-slate-900">
@@ -208,7 +208,7 @@ export const PaymentHistoryPage: React.FC = () => {
                       <span
                         className={`text-[10px] font-semibold px-1.5 py-0.5 rounded-md ${
                           p.paymentMethod === 'Online'
-                            ? 'bg-purple-50 text-[#7C3AED] border border-purple-100'
+                            ? 'bg-blue-50 text-blue-600 border border-blue-100'
                             : 'bg-emerald-50 text-emerald-700 border border-emerald-100'
                         }`}
                       >
@@ -239,7 +239,7 @@ export const PaymentHistoryPage: React.FC = () => {
                       <div className="flex items-center justify-end gap-1">
                         <button
                           onClick={() => navigateTo('receipt-detail', { paymentId: p.id })}
-                          className="p-1 text-slate-400 hover:text-[#7C3AED] hover:bg-purple-50 rounded-md transition-colors"
+                          className="p-1 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-md transition-colors"
                           title="View Official Receipt"
                         >
                           <Eye className="w-3.5 h-3.5" />

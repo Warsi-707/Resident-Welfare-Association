@@ -89,13 +89,13 @@ export const AllMembersPage: React.FC = () => {
         <div className="flex items-center justify-between gap-2 pb-2.5 border-b border-slate-100">
           <div className="flex items-center gap-2">
             <span className="text-xs font-bold text-slate-800">Members Directory</span>
-            <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-purple-50 text-[#7C3AED] border border-purple-100">
+            <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-blue-50 text-blue-600 border border-blue-100">
               {members.length} Total
             </span>
           </div>
           <button
             onClick={() => navigateTo('add-member')}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#7C3AED] hover:bg-[#6D28D9] text-white text-xs font-semibold shadow-xs transition-colors cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-xs transition-colors cursor-pointer"
           >
             <Plus className="w-3.5 h-3.5" />
             <span>Add Member</span>
@@ -241,7 +241,7 @@ export const AllMembersPage: React.FC = () => {
                           {floors.map((fl, idx) => (
                             <span
                               key={idx}
-                              className="inline-flex px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#F5F3FF] text-[#7C3AED]"
+                              className="inline-flex px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-blue-50 text-blue-600"
                             >
                               {fl}
                             </span>

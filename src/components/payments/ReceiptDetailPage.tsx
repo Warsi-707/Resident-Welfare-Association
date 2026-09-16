@@ -15,7 +15,7 @@ export const ReceiptDetailPage: React.FC = () => {
         <p className="text-sm text-slate-500">Payment receipt not found.</p>
         <button
           onClick={() => navigateTo('payment-history')}
-          className="mt-3 px-4 py-2 text-xs font-semibold rounded-xl bg-[#7C3AED] text-white"
+          className="mt-3 px-4 py-2 text-xs font-semibold rounded-xl bg-blue-600 text-white"
         >
           Return to Payment History
         </button>
@@ -43,7 +43,7 @@ export const ReceiptDetailPage: React.FC = () => {
 
         <button
           onClick={handlePrint}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#7C3AED] hover:bg-[#6D28D9] text-white text-xs font-semibold shadow-sm transition-colors"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-sm transition-colors"
         >
           <Printer className="w-4 h-4" />
           <span>Print Official Receipt</span>
@@ -71,7 +71,7 @@ export const ReceiptDetailPage: React.FC = () => {
                 className="h-10 w-auto max-w-[120px] object-contain shrink-0"
               />
             ) : (
-              <Building2 className="w-5 h-5 text-[#7C3AED]" />
+              <Building2 className="w-5 h-5 text-blue-600" />
             )}
             <span>{settings.organizationName}</span>
           </div>
@@ -88,7 +88,7 @@ export const ReceiptDetailPage: React.FC = () => {
         <div className="grid grid-cols-2 gap-4 my-5 text-xs bg-slate-50 p-3.5 border border-slate-200 rounded-xl">
           <div>
             <span className="text-slate-500 block">Receipt Number:</span>
-            <span className="font-mono font-bold text-sm text-[#7C3AED]">
+            <span className="font-mono font-bold text-sm text-blue-600">
               {payment.receiptNumber}
             </span>
           </div>

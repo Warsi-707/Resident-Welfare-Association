@@ -4,10 +4,12 @@ import { authenticateToken, requireRole, AuthenticatedRequest } from '../middlew
 
 const router = Router();
 
-// GET /api/reports/monthly
-router.get('/monthly', authenticateToken, async (req: AuthenticatedRequest, res: Response): Promise<any> => {
+// GET /api/reports/monthly (ADMIN or STAFF only)
+router.get('/monthly', authenticateToken, requireRole(['ADMIN', 'COLLECTION_STAFF']), async (req: AuthenticatedRequest, res: Response): Promise<any> => {
   try {
-    const { year = '2024' } = req.query;
+    const currentYearStr = String(new Date().getFullYear());
+    const yearParam = req.query.year ? String(req.query.year) : currentYearStr;
+    const year = Number(yearParam);
 
     const challans = await prisma.challan.findMany({
       where: { year: Number(year) },
@@ -66,8 +68,8 @@ router.get('/monthly', authenticateToken, async (req: AuthenticatedRequest, res:
   }
 });
 
-// GET /api/reports/status
-router.get('/status', authenticateToken, async (req: AuthenticatedRequest, res: Response): Promise<any> => {
+// GET /api/reports/status (ADMIN or STAFF only)
+router.get('/status', authenticateToken, requireRole(['ADMIN', 'COLLECTION_STAFF']), async (req: AuthenticatedRequest, res: Response): Promise<any> => {
   try {
     const members = await prisma.member.findMany({
       include: {

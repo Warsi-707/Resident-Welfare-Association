@@ -81,8 +81,8 @@ export const AdminDashboard: React.FC = () => {
 
         {/* CARD 2: Net Collection */}
         <div className="bg-white rounded-xl border border-slate-200/80 shadow-2xs px-3 py-2.5 sm:px-3.5 sm:py-3 flex items-center gap-2.5 sm:gap-3 min-w-0 overflow-hidden">
-          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-[#F3E8FF] flex items-center justify-center shrink-0">
-            <span className="text-[#7C3AED] font-bold text-xs sm:text-sm leading-none">
+          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-blue-50 flex items-center justify-center shrink-0">
+            <span className="text-blue-600 font-bold text-xs sm:text-sm leading-none">
               Rs
             </span>
           </div>
@@ -221,7 +221,7 @@ export const AdminDashboard: React.FC = () => {
                             {memberFloors.map((fl: string, idx: number) => (
                               <span
                                 key={idx}
-                                className="inline-flex px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-[#F5F3FF] text-[#7C3AED]"
+                                className="inline-flex px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-blue-50 text-blue-600"
                               >
                                 {fl}
                               </span>

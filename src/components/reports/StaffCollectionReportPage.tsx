@@ -120,13 +120,13 @@ export const StaffCollectionReportPage: React.FC = () => {
             onClick={() => setSelectedStaff(selectedStaff === s.name ? 'All' : s.name)}
             className={`bg-white p-5 rounded-2xl border cursor-pointer transition-all shadow-2xs ${
               selectedStaff === s.name
-                ? 'border-[#7C3AED] bg-purple-50/30 font-semibold'
+                ? 'border-blue-600 bg-blue-50/30 font-semibold'
                 : 'border-slate-200/80 hover:border-slate-300'
             }`}
           >
             <div className="flex items-center justify-between">
               <span className="text-xs font-bold text-slate-900">{s.name}</span>
-              <span className="text-[11px] font-semibold text-[#7C3AED] bg-purple-50 px-2 py-0.5 rounded-lg">
+              <span className="text-[11px] font-semibold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-lg">
                 {s.receiptCount} Receipts
               </span>
             </div>
@@ -208,7 +208,7 @@ export const StaffCollectionReportPage: React.FC = () => {
             <tbody className="divide-y divide-slate-100 text-slate-700">
               {displayedPayments.map((p) => (
                 <tr key={p.id} className="hover:bg-slate-50/60 transition-colors">
-                  <td className="py-3 px-4 font-mono font-medium text-[#7C3AED]">
+                  <td className="py-3 px-4 font-mono font-medium text-blue-600">
                     {p.receiptNumber}
                   </td>
                   <td className="py-3 px-4 text-slate-600">{formatDate(p.paymentDate)}</td>

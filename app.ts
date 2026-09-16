@@ -1,9 +1,4 @@
 import 'dotenv/config';
-
-if (!process.env.JWT_SECRET) {
-  process.env.JWT_SECRET = 'rwa-super-secret-jwt-key-2026-change-in-production';
-}
-
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
@@ -52,7 +47,12 @@ app.use((req, _res, next) => {
     (req.headers['x-now-route-matches'] as string) ||
     (req.headers['x-forwarded-uri'] as string);
 
-  if (matchedPath && matchedPath.startsWith('/api') && !matchedPath.startsWith('/api/index')) {
+  if (
+    matchedPath &&
+    matchedPath.startsWith('/api') &&
+    !matchedPath.startsWith('/api/index') &&
+    !matchedPath.includes('[')
+  ) {
     req.url = matchedPath;
   }
 
@@ -60,8 +60,9 @@ app.use((req, _res, next) => {
   if (req.url.startsWith('/api/api/')) {
     req.url = req.url.replace(/^\/api\/api\//, '/api/');
   }
-  // If hosting platform stripped /api prefix, restore it for Express route matching
+  // If hosting platform stripped /api prefix, restore it for Express route matching (Vercel serverless functions)
   else if (
+    process.env.VERCEL &&
     !req.url.startsWith('/api') &&
     !req.url.startsWith('/uploads') &&
     !req.url.startsWith('/whatsapp-')
@@ -74,7 +75,19 @@ app.use((req, _res, next) => {
 // 5. Serve uploaded files (e.g. organization logo)
 app.use('/uploads', express.static(uploadsDir));
 
-// 6. Health check endpoint
+// 6. Performance profiling middleware for timing API response times
+app.use((req, res, next) => {
+  if (req.url.startsWith('/api')) {
+    const start = performance.now();
+    res.on('finish', () => {
+      const duration = (performance.now() - start).toFixed(2);
+      console.log(`[PERF] ${req.method} ${req.originalUrl || req.url} - ${res.statusCode} (${duration}ms)`);
+    });
+  }
+  next();
+});
+
+// 7. Health check endpoint
 app.get('/api/health', (_req, res) => {
   res.json({ status: 'ok', service: 'RWA Collection & Reporting API', timestamp: new Date() });
 });
@@ -105,14 +118,18 @@ app.use((err: any, _req: express.Request, res: express.Response, _next: express.
   }
 });
 
-// 10. Fallback 404 handler (ensures lambda always terminates cleanly)
-app.use((req, res) => {
-  if (!res.headersSent) {
-    res.status(404).json({
-      error: 'Endpoint not found',
-      method: req.method,
-      url: req.url,
-    });
+// 10. Fallback 404 handler for API routes
+app.use((req, res, next) => {
+  if (req.url.startsWith('/api')) {
+    if (!res.headersSent) {
+      res.status(404).json({
+        error: 'Endpoint not found',
+        method: req.method,
+        url: req.url,
+      });
+    }
+  } else {
+    next();
   }
 });
 
