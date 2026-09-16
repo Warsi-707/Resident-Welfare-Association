@@ -60,8 +60,9 @@ app.use((req, _res, next) => {
   if (req.url.startsWith('/api/api/')) {
     req.url = req.url.replace(/^\/api\/api\//, '/api/');
   }
-  // If hosting platform stripped /api prefix, restore it for Express route matching
+  // If hosting platform stripped /api prefix in serverless environment, restore it for Express route matching
   else if (
+    process.env.VERCEL &&
     !req.url.startsWith('/api') &&
     !req.url.startsWith('/uploads') &&
     !req.url.startsWith('/whatsapp-')
@@ -105,8 +106,8 @@ app.use((err: any, _req: express.Request, res: express.Response, _next: express.
   }
 });
 
-// 10. Fallback 404 handler (ensures lambda always terminates cleanly)
-app.use((req, res) => {
+// 10. Fallback 404 handler for API routes
+app.use('/api', (req, res) => {
   if (!res.headersSent) {
     res.status(404).json({
       error: 'Endpoint not found',
@@ -115,6 +116,19 @@ app.use((req, res) => {
     });
   }
 });
+
+// Fallback 404 handler for Vercel serverless function
+if (process.env.VERCEL) {
+  app.use((req, res) => {
+    if (!res.headersSent) {
+      res.status(404).json({
+        error: 'Endpoint not found',
+        method: req.method,
+        url: req.url,
+      });
+    }
+  });
+}
 
 export { app };
 export default app;
